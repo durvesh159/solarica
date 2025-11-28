@@ -1,0 +1,10 @@
+@import "tailwindcss";
+/* Custom global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #eef4f7; /* light modern background */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #1e293b; /* dark gray for headings */
+}
