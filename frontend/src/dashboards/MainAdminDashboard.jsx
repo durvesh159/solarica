@@ -70,8 +70,6 @@
 // export default MainAdminDashboard;
 
 
-
-
 import React, { useState } from "react";
 import CompanyDashboardLayout from "../components/CompanyDashboardLayout";
 
@@ -109,27 +107,45 @@ const MainAdminDashboard = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-bold text-gray-900 mb-10">
+      <h1 className="text-4xl font-bold text-gray-900 mb-8">
         Welcome to Solarica Group of Companies
       </h1>
 
-      {/* Show All Companies initially */}
-      {!selectedCompany && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+      {/* Company Filter Pills */}
+      <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
+        {companies.map((company, idx) => (
+          <div
+            key={idx}
+            onClick={() =>
+              setSelectedCompany(idx === selectedCompany ? null : idx)
+            }
+            className={`px-6 py-2 text-center rounded-full cursor-pointer transition-all border
+              ${
+                selectedCompany === idx
+                  ? "bg-teal-600 text-white shadow-lg scale-105"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }
+            `}
+          >
+            {company}
+          </div>
+        ))}
+      </div>
+
+      {/* Render all companies if none selected */}
+      {selectedCompany === null ? (
+        <div className="grid grid-cols-1 gap-10">
           {companies.map((company, idx) => (
-            <div
+            <CompanyDashboardLayout
               key={idx}
-              onClick={() => setSelectedCompany(idx)}
-              className="bg-teal-100 text-teal-700 rounded-full px-4 py-3 cursor-pointer text-center shadow-md hover:shadow-xl hover:bg-teal-200 transition-all font-semibold"
-            >
-              {company}
-            </div>
+              companyName={company}
+              salesData={dummySalesData}
+              employeeData={dummyEmployeeData}
+              financialData={dummyFinancialData}
+            />
           ))}
         </div>
-      )}
-
-      {/* Show selected company dashboard */}
-      {selectedCompany !== null && (
+      ) : (
         <CompanyDashboardLayout
           companyName={companies[selectedCompany]}
           salesData={dummySalesData}
