@@ -81,6 +81,29 @@ const companies = [
   "Solarica Greenwheels Pvt Ltd",
 ];
 
+// Static Aggregated Data (Seems like final data collected from all 5 companies)
+const combinedSalesData = [
+  { month: "Jan", sales: 20000 }, // Total across 5
+  { month: "Feb", sales: 15000 },
+  { month: "Mar", sales: 25000 },
+  { month: "Apr", sales: 22000 },
+];
+
+const combinedEmployeeData = [
+  { name: "Active", value: 1800 },
+  { name: "Inactive", value: 400 },
+  { name: "On Leave", value: 200 },
+  { name: "Contract", value: 300 },
+];
+
+const combinedFinancialData = [
+  { quarter: "Q1", revenue: 50000, expense: 35000 },
+  { quarter: "Q2", revenue: 62000, expense: 43000 },
+  { quarter: "Q3", revenue: 48000, expense: 30000 },
+  { quarter: "Q4", revenue: 75000, expense: 52000 },
+];
+
+// Individual Dummy Data (Still Static 😁)
 const dummySalesData = [
   { month: "Jan", sales: 4000 },
   { month: "Feb", sales: 3000 },
@@ -113,12 +136,23 @@ const MainAdminDashboard = () => {
 
       {/* Company Filter Pills */}
       <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
+        <div
+          onClick={() => setSelectedCompany(null)}
+          className={`px-6 py-2 text-center rounded-full cursor-pointer transition-all border 
+            ${
+              selectedCompany === null
+                ? "bg-teal-600 text-white shadow-lg scale-105"
+                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+            }
+          `}
+        >
+          Solarica Group Dashboard
+        </div>
+
         {companies.map((company, idx) => (
           <div
             key={idx}
-            onClick={() =>
-              setSelectedCompany(idx === selectedCompany ? null : idx)
-            }
+            onClick={() => setSelectedCompany(idx)}
             className={`px-6 py-2 text-center rounded-full cursor-pointer transition-all border
               ${
                 selectedCompany === idx
@@ -132,19 +166,14 @@ const MainAdminDashboard = () => {
         ))}
       </div>
 
-      {/* Render all companies if none selected */}
+      {/* Default View → Group Dashboard */}
       {selectedCompany === null ? (
-        <div className="grid grid-cols-1 gap-10">
-          {companies.map((company, idx) => (
-            <CompanyDashboardLayout
-              key={idx}
-              companyName={company}
-              salesData={dummySalesData}
-              employeeData={dummyEmployeeData}
-              financialData={dummyFinancialData}
-            />
-          ))}
-        </div>
+        <CompanyDashboardLayout
+          companyName="Solarica Group (All Companies Combined)"
+          salesData={combinedSalesData}
+          employeeData={combinedEmployeeData}
+          financialData={combinedFinancialData}
+        />
       ) : (
         <CompanyDashboardLayout
           companyName={companies[selectedCompany]}
@@ -158,3 +187,4 @@ const MainAdminDashboard = () => {
 };
 
 export default MainAdminDashboard;
+
