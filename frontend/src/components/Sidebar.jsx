@@ -1,3 +1,4 @@
+// //Sidebar.jsx
 // import React from "react";
 // import {
 //   FaHome,
@@ -7,8 +8,8 @@
 //   FaLayerGroup,
 //   FaBullhorn,
 //   FaFileAlt,
-//   FaCog,
 //   FaSignOutAlt,
+//   FaCog,
 // } from "react-icons/fa";
 // import { Link } from "react-router-dom";
 
@@ -56,7 +57,7 @@
 // export default Sidebar;
 
 
-
+// Sidebar.jsx
 import React from "react";
 import {
   FaHome,
@@ -69,9 +70,11 @@ import {
   FaSignOutAlt,
   FaCog,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
+
   const menuItems = [
     { name: "Dashboard", icon: <FaHome />, link: "/" },
     { name: "Sales Master", icon: <FaChartLine />, link: "/sales" },
@@ -97,16 +100,26 @@ const Sidebar = () => {
       </div>
 
       <nav className="flex flex-col gap-2">
-        {menuItems.map((item, index) => (
-          <Link
-            key={index}
-            to={item.link}
-            className="flex items-center gap-4 p-3 font-medium rounded-md hover:bg-white hover:text-teal-800 transition"
-          >
-            {item.icon}
-            {item.name}
-          </Link>
-        ))}
+        {menuItems.map((item, index) => {
+          const isActive = location.pathname === item.link;
+
+          return (
+            <Link
+              key={index}
+              to={item.link}
+              className={`flex items-center gap-4 p-3 font-medium rounded-md transition
+                ${
+                  isActive
+                    ? "bg-white text-teal-800 shadow-md"
+                    : "hover:bg-white hover:text-teal-800"
+                }
+              `}
+            >
+              {item.icon}
+              {item.name}
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );
