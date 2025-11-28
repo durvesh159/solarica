@@ -31,20 +31,24 @@
 // ];
 
 // const MainAdminDashboard = () => {
-//   const [selectedCompany, setSelectedCompany] = useState(0); // auto-first load
+//   const [selectedCompany, setSelectedCompany] = useState(0); // Default load 1st company
 
 //   return (
 //     <div className="p-6">
-//       <div className="flex gap-6 mb-6 overflow-x-auto">
+//       <h1 className="text-4xl font-bold text-gray-900 mb-8">
+//         Welcome to Solarica Group of Companies
+//       </h1>
+
+//       <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
 //         {companies.map((company, idx) => (
 //           <div
 //             key={idx}
 //             onClick={() => setSelectedCompany(idx)}
-//             className={`min-w-[150px] px-5 py-3 rounded-full text-center cursor-pointer transition-all border
+//             className={`px-6 py-2 text-center rounded-full cursor-pointer transition-all border 
 //               ${
 //                 selectedCompany === idx
-//                   ? "bg-teal-600 text-white shadow-lg scale-105"
-//                   : "bg-teal-100 text-teal-700 hover:bg-teal-200"
+//                   ? "bg-teal-600 text-white shadow-lg scale-100"
+//                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
 //               }
 //             `}
 //           >
@@ -64,6 +68,8 @@
 // };
 
 // export default MainAdminDashboard;
+
+
 
 
 import React, { useState } from "react";
@@ -99,38 +105,38 @@ const dummyFinancialData = [
 ];
 
 const MainAdminDashboard = () => {
-  const [selectedCompany, setSelectedCompany] = useState(0); // Default load 1st company
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8">
-        Welcome to Solarica Group
+      <h1 className="text-4xl font-bold text-gray-900 mb-10">
+        Welcome to Solarica Group of Companies
       </h1>
 
-      <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
-        {companies.map((company, idx) => (
-          <div
-            key={idx}
-            onClick={() => setSelectedCompany(idx)}
-            className={`px-6 py-2 text-center rounded-full cursor-pointer transition-all border 
-              ${
-                selectedCompany === idx
-                  ? "bg-teal-600 text-white shadow-lg scale-100"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }
-            `}
-          >
-            {company}
-          </div>
-        ))}
-      </div>
+      {/* Show All Companies initially */}
+      {!selectedCompany && (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
+          {companies.map((company, idx) => (
+            <div
+              key={idx}
+              onClick={() => setSelectedCompany(idx)}
+              className="bg-teal-100 text-teal-700 rounded-full px-4 py-3 cursor-pointer text-center shadow-md hover:shadow-xl hover:bg-teal-200 transition-all font-semibold"
+            >
+              {company}
+            </div>
+          ))}
+        </div>
+      )}
 
-      <CompanyDashboardLayout
-        companyName={companies[selectedCompany]}
-        salesData={dummySalesData}
-        employeeData={dummyEmployeeData}
-        financialData={dummyFinancialData}
-      />
+      {/* Show selected company dashboard */}
+      {selectedCompany !== null && (
+        <CompanyDashboardLayout
+          companyName={companies[selectedCompany]}
+          salesData={dummySalesData}
+          employeeData={dummyEmployeeData}
+          financialData={dummyFinancialData}
+        />
+      )}
     </div>
   );
 };
