@@ -7,6 +7,7 @@ import {
   FaLayerGroup,
   FaBullhorn,
   FaFileAlt,
+  FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
